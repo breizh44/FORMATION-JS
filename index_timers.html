@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // let i = 0
+        // const t = setInterval(() => {
+        //     i++
+        //     console.log('bonjour')
+        //     if (i >= 5) {
+        //         clearInterval(t)
+        //     }
+        // }, 1000)
+        // function decompte(n) {
+        //     console.log(n)
+        //     const t = setInterval(() => {
+        //         n--
+        //         console.log(n)  
+        //         if (n === 0) {
+        //             clearInterval(t)
+        //         }              
+        //     }, 1000)
+        // }
+
+        function decompte(n) {
+            console.log(n)
+            if (n === 0) { return }
+            setTimeout(() => {
+                decompte(n -1)             
+            }, 1000)
+        }        
+
+        decompte(3)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

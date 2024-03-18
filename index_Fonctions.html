@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let a = 3;
+        a = 4;
+        const b = 'les gens';
+        const c = 'Salut';
+        let d = `${c} ${b}`
+        const isMajeur = undefined
+        let e
+        const notes = [13, 14, 'hello', [1, 2, 3] ]
+        const notes2 = notes
+        notes2[2] = 0
+        const person = {
+            firstname : 'John',
+            lasname : 'Doe',
+            age: 24,
+            notes: [12,14,15],
+            job: {
+                name: 'developer',
+                hours:25
+            }
+
+        }
+        let a1 = 'Salutation'
+        let b1 = a1
+        console.log('Bonjour les gens')
+        const age = 20
+        if (age >=18) {
+            console.log('Tu es majeur')
+        }
+        else {
+            console.log('Tu es mineur')
+        }
+
+        const pays = 'FR'
+        switch (pays){
+            case 'FR':
+                console.log('Je suis en France')
+                break
+            case 'US':
+                console.log('Je suis aux US')
+                break
+            default:
+                console.log('Je suis dans un pays inconnu')
+                break
+        }
+        const eleves = ['Jean', 'Marc', 'Marie']
+        for (let i = 0; i < eleves.length; i++) {
+            console.log(eleves[i]) // affichera alternativement : Jean, Marc, Marie
+        }
+
+        const eleves2 = ['Jean', 'Marc', 'Marie']
+        for (const eleve of eleves2) {
+            console.log(eleve) // affichera alternativement : Jean, Marc, Marie
+        }        
+        //const ages = prompt('Quel est ton âge ?')
+        ages = 18
+            if (ages <= 13) {
+                console.log('Lilo & Stitch')
+            } else if (ages < 18) {
+                console.log('MatrixZ')
+            } else {
+                console.log('Evil Dead')
+            }
+
+            function canDrive(age, pays){
+                if (
+                    (age >= 18 && pays === 'FR') || 
+                    (age >= 16 && pays === 'US')
+                )
+                {
+                    return true
+                }
+                return false
+            }
+
+            console.log(canDrive(13, 'FR'))
+
+            function greeting(name) {
+                console.log(`Bonjour ${name}`)
+            }
+            greeting('anthony')
+
+            function upNotes(notes) {
+                for (let index = 0; index < notes.length; index++) {
+                    notes[index]++;                    
+                }
+            }
+            const mesNotes = [13,14,15];
+            upNotes(mesNotes);
+            console.log(mesNotes)
+
+            const aha = {
+                firstname: 'John',
+                lastName: 'Doe',
+                fullName: function() {
+                    console.log(`${this.firstname} ${this.lastname}`)
+                }
+            }
+            const maFonction = (param1, param2) => {
+                console.log(param1, param2)
+            }
+            maFonction(1,2)
+            aha.fullName()
+
+            //commentaire sur 1 ligne
+            /* Commentaire multiligne :
+            exemple de plusieures lignes
+            */
+
+            //on crée un nombre entre 0 et 10
+            //3 essais pour deviner le nombre
+            //isRight(n)
+            //guess()
+            function getRandomInt(max) {
+                return Math.floor(Math.random()*max)
+            }
+            const solution = getRandomInt(10)
+            console.log(solution)
+
+            function isRight(n) {
+                return solution === n
+            }
+
+            function guess() {
+                const number = prompt('Entrez un chiffre')*1
+                return isRight(number)
+            }
+
+            // for (i=0; i <3; i++) {
+            //     if (guess()) {
+            //         console.log('Bravo')
+            //         break
+            //     } else if (i===2) {
+            //         console.log('Vous avez perdu')
+            //     }
+            // }
+
+            function isPremier(n) {
+                if (n < 2) {
+                    return false
+                }
+                for (let i = n-1; i > 1; i--) {
+                    if (n % i === 0){
+                        return false
+                    }               
+                }
+                return true
+            }
+            console.log('0', isPremier(0))
+            console.log('1',isPremier(1))    
+            console.log('2',isPremier(2))   
+            console.log('3',isPremier(3))  
+            console.log('10',isPremier(10))     
+            console.log('11',isPremier(11))   
+            
+                function isPalindrome(word) {
+                    const reversedWord = word
+                        .split('')
+                        .reverse()
+                        .join('')
+                    return word.toUpperCase() === reversedWord.toUpperCase()
+                }
+            console.log(isPalindrome('Kayak'))
+            console.log(isPalindrome('Bonjour'))
+            /*
+                const students = [
+                    {
+                        name: 'John',
+                        notes: [1, 20, 18, 19, 12]
+                    },
+                    {
+                        name: 'Jane',
+                        notes: [17, 18, 20, 13, 15]
+                    },
+                    {
+                        name: 'Sophie',
+                        notes: [17, 12, 14, 15, 13]
+                    },
+                    {
+                        name: 'Marc',
+                        notes: [2, 3, 5, 8, 9]
+                    },
+                    {
+                        name: 'Manon',
+                        notes: [18, 17, 18, 19, 12]
+                    }
+                ]      
+                
+                const moyenne = (notes) => {
+                    let sum = 0
+                    for (let note of notes) {
+                        sum = sum + note
+                    }
+                    return sum / notes.length
+                }
+
+                const compareStudent = (a, b) => {
+                    return b.moyenne - a.moyenne
+                }
+                
+                for (let student of students) {
+                    student.moyenne = moyenne(student.notes)
+                    student.worst = Math.min(...student.notes)
+                    student.best = Math.max(...student.notes)
+                }
+
+                students.sort(compareStudent)
+
+                const formatStudent = (student) => {
+                    return `${student.name} avec une moyenne de ${student.moyenne}, meilleur note (${student.best}), pire note (${student.worst})`
+                }
+
+                console.log(`Top 3 étudiant 
+                1: ${formatStudent(students[0])}        
+                2: ${formatStudent(students[1])} 
+                3: ${formatStudent(students[2])} 
+                `)     
+                */  
+        const phrase = `Vous savez, moi je ne crois pas qu’il y ait de bonne ou de mauvaise situation. Moi, si je devais résumer ma vie aujourd’hui avec vous, je dirais que c’est d’abord des rencontres. Des gens qui m’ont tendu la main, peut-être à un moment où je ne pouvais pas, où j’étais seul chez moi. Et c’est assez curieux de se dire que les hasards, les rencontres forgent une destinée... Parce que quand on a le goût de la chose, quand on a le goût de la chose bien faite, le beau geste, parfois on ne trouve pas l’interlocuteur en face je dirais, le miroir qui vous aide à avancer. Alors ça n’est pas mon cas, comme je disais là, puisque moi au contraire, j’ai pu ; et je dis merci à la vie, je lui dis merci, je chante la vie, je danse la vie... je ne suis qu’amour ! Et finalement, quand des gens me disent « Mais comment fais-tu pour avoir cette humanité ? », je leur réponds très simplement que c’est ce goût de l’amour, ce goût donc qui m’a poussé aujourd’hui à entreprendre une construction mécanique... mais demain qui sait ? Peut-être simplement à me mettre au service de la communauté, à faire le don, le don de soi...`
+        const frequencies = {}
+        const ignored = [',', ';', '?', '!', ':', '«', '»', '...']
+        let cleanedPhrase = phrase.toLowerCase()
+        for (let character of ignored) {
+            cleanedPhrase = cleanedPhrase.replaceAll(character, '') 
+        }
+        const words = cleanedPhrase.split(' ');
+        console.log(words)            
+        for (let word of words) {
+            if (word !== '') {
+                if (frequencies[word]) {
+                    frequencies[word]++
+                }
+                else {
+                    frequencies[word] = 1
+                }
+            }
+        }
+        const frequenciesArray = []
+        for (let k in frequencies) {
+            frequenciesArray.push({
+                word: k,
+                count: frequencies[k]
+            })
+        }
+        frequenciesArray.sort((a, b) => b.count - a.count)
+        console.log(`Les mots les plus fréquents sont : "${frequenciesArray[0].word}" (${frequenciesArray[0].count}), "${frequenciesArray[1].word}" (${frequenciesArray[1].count}), "${frequenciesArray[2].word}" (${frequenciesArray[2].count})`)
+        //console.log(frequenciesArray)
+        //Split 
+        // {vous: 3, moi: 2}
+        //replace pour retirer caractères spéciaux (, etc...)
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

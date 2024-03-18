@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="module">
+    import {sum as somme, hello} from './array.js'
+    //import hello from './hello.js'
+    //import * as A from './array.js' //A éviter : préférer l'import de seulement ce dont on a besoin
+
+    console.log(somme([12, 23, 19]))
+    // console.log(A.sum([12, 23, 19]))
+    // console.log(A.hello())
+
+    console.log(hello())
+
+    console.log(import('./array.js').then(({hello}) => hello()))
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
