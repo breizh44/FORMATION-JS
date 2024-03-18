@@ -1,56 +1,64 @@
-console.log(document.querySelector('#hello'))
-const lis = document.querySelectorAll('li')
-console.log(lis[2])
-lis.forEach(v => console.log(v))
-console.log(Array.from(lis))
-
-const lis2 = document.querySelectorAll('ul li:first-child')
-console.log(Array.from(lis2))
-
-const ul = document.querySelector('ul')
-console.log(ul.nodeName, ul.innerHTML)
-const lis1 = document.querySelector('ul li:first-child')
-console.log(lis1.getAttribute('class'))
-
-console.log(lis1.classList)
 
 /**
- * Pour faire clignoter en rouge le premier li
+ * Crée un élément HTML représentant un article
+ * @param {{title: string, body: string}} post 
+ * @return {HTMLElement}
  */
-setInterval(() => {
-    lis1.classList.toggle('red')
-}, 1000)
+function createArticle(post) {
+    const article = document.createElement('article')
+    //ATTENTION : pas sécurisé car on injecte de l'HTML dans notre page
+    // article.innerHTML = `
+    //     <h2>${post.title}</h2>
+    //     <p>${post.body}</p>
+    // `
 
-lis1.style.fontWeight = 'bold'
-lis1.style.color = 'blue'
+    //Version plus sécurisée
+    article.append(createElementWithText('h2', post.title))
+    article.append(createElementWithText('p', post.body))
 
-console.log(getComputedStyle(lis1).color)
+    return article
+}
 
 /**
- * Ajout d'un élément au DOM
+ * Crée un élément HTML avec son texte
+ * @param {string} tagName 
+ * @param {string} content 
+ * @return {HTMLElement}
  */
-const newLi = document.createElement('li')
-newLi.innerHTML = 'Bonjour les gens'
-//document.querySelector('ul').appendChild(newLi)
-document.querySelector('ul').append(newLi)
-
-const div = document.createElement('div')
-div.innerHTML = 'Bonjour les gens'
-//ul.insertAdjacentElement('beforebegin', div)
+function createElementWithText(tagName, content) {
+    const el = document.createElement(tagName)
+    el.innerText = content
+    return el    
+}
 
 
-/**
- * Parcours des enfants dans le DOM
- */
-console.log(ul.children)
-console.log(ul.childNodes)
+async function main() {
+    const wrapper = document.querySelector('#lastPosts')
+    const loader = document.createElement('p')
+    loader.innerText = 'Chargement...'
+    wrapper.append(loader)
+    try {
 
-const firstLi = document.querySelector('ul li')
-console.log(
-    firstLi.parentElement
-)
-console.log(
-    firstLi.nextElementSibling
-)
-//firstLi.remove()
-ul.append(firstLi.cloneNode(true))
+        const r = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5',
+            {
+                headers: {
+                    Accept: 'application/json'
+                }
+            })
+        if (!r.ok) {
+            throw new Error('Erreur serveur')
+        }
+        const posts = await r.json()
+        loader.remove()
+        for (let post of posts)
+        {
+            wrapper.append(createArticle(post))
+        }
+    } catch (e) {
+        loader.innerText = 'Impossible de charger les articles'
+        loader.style.color = 'red'
+        return
+    }
+}
+
+main()
