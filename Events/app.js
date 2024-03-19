@@ -1,47 +1,19 @@
-document.querySelector('form').addEventListener('submit', (e) => {
-   console.log(e) 
-   //e.preventDefault()
-   const form = e.currentTarget
-   const data = new FormData(form)
-   const firstname = data.get('firstname')
-   if (firstname.length < 2) {
-    console.log('invalide')
-    e.preventDefault() //on empêche le formulaire d'être soumis tant que les données ne sont pas valides
-   }
+//1ere version qui gère les spoilers individuellement
+/*
+document.querySelectorAll('.spoiler').forEach(spoiler => {
+    spoiler.addEventListener('click', e => {
+        e.currentTarget.classList.remove('spoiler')
+    })
 })
+*/
 
-//exemple d'evt qui détecte que le champ a changé
-document.querySelector('input').addEventListener('change', (e) => {
-    console.log('change')
- })
+//2eme version qui gère tous les spoilers en même temps
+const spoilers = document.querySelectorAll('.spoiler')
 
- document.querySelector('input').addEventListener('input', (e) => {
-    console.log('input', e.currentTarget.value)
- })
+function revealSpoiler() {
+    spoilers.forEach(spoiler => spoiler.classList.remove('spoiler'))
+}
 
- //si CRT+K pressé sur la page
- document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey === true && e.key === 'k')
-    {
-        e.preventDefault()
-        console.log('raccourci')
-    }
- })
-
- document.querySelector('input').addEventListener('focus', (e) => {
-    console.log(e)
- })
-
- const check = document.querySelector('input[type="checkbox"]')
- console.log(check)
- document.querySelector('#chk').addEventListener('change', (e) => {
-    console.log(e.currentTarget.checked)
- }) 
-
-document.querySelector('select')
- .addEventListener('change', (e) => {
-    console.log(
-        Array.from(e.currentTarget.selectedOptions)
-            .map(option => option.value)
-    )
- })
+spoilers.forEach(spoiler => {
+    spoiler.addEventListener('click',revealSpoiler)
+})
