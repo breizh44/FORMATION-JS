@@ -49,14 +49,18 @@ export class TodoList {
             const t = new TodoListItem(todo)
             this.#listElement.append(t.element)
         }
-        element.querySelector('form').addEventListener('submit', e => this.onSubmit(e))
+        element.querySelector('form').addEventListener('submit', e => this.#onSubmit(e))
+        //gestion des evts sur les boutons de filtres
+        element.querySelectorAll('.btn-group button').forEach(button => {
+            button.addEventListener('click', e => this.#toggleFilter(e))
+        })
     }
 
     /**
      * 
      * @param {SubmitEvent} e 
      */
-    onSubmit(e) {
+    #onSubmit(e) {
         e.preventDefault()
         const form = e.currentTarget
         const title = new FormData(form).get('title').toString().trim()
@@ -71,6 +75,29 @@ export class TodoList {
         const item = new TodoListItem(todo)
         this.#listElement.prepend(item.element)
         form.reset()
+    }
+
+    /**
+     * 
+     * @param {PointerEvent} e 
+     */
+    #toggleFilter(e) {
+        e.preventDefault()
+        const filter = e.currentTarget.getAttribute('data-filter')
+        e.currentTarget.parentElement.querySelector('.active').classList.remove('active') //désactive le filtre courant
+        e.currentTarget.classList.add('active')
+        if (filter === 'todo') {
+            this.#listElement.classList.add('hide-completed')
+            this.#listElement.classList.remove('hide-todo')
+        } else if (filter === 'done')
+        {
+            this.#listElement.classList.add('hide-todo')
+            this.#listElement.classList.remove('hide-completed')           
+        } else {
+            this.#listElement.classList.remove('hide-completed')           
+            this.#listElement.classList.remove('hide-todo')          
+        }
+        console.log(filter)
     }
 }
 
@@ -96,6 +123,7 @@ class TodoListItem {
         const li = createElement('li', {
             class: 'todo list-group-item d-flex align-items-center'
         } )
+        this.#element = li
         const checkbox = createElement('input', {
             type: 'checkbox',
             class: 'form-check-input',
@@ -116,10 +144,10 @@ class TodoListItem {
         li.append(checkbox)
         li.append(label)
         li.append(button)
+        this.toggle(checkbox)
 
         button.addEventListener('click', e => this.remove(e))
-
-        this.#element = li
+        checkbox.addEventListener('change', e => this.toggle(e.currentTarget))
     }
 
     /**
@@ -140,5 +168,19 @@ class TodoListItem {
     remove(e) {
         e.preventDefault()
         this.#element.remove()
+    }
+
+    /**
+     * Change l'état (à faire / fait) de la tâche
+     * @param {HTMLInputElement} checkbox 
+     */
+    toggle(checkbox) {
+        //ajout / suppression de la classe CSS 'is-completed'
+        //suivant l'état de la checkbox
+        if (checkbox.checked) {
+            this.#element.classList.add('is-completed')
+        } else {
+            this.#element.classList.remove('is-completed')
+        }
     }
 }
