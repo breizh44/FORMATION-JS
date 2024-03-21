@@ -6,7 +6,16 @@
 //     console.log(e)
 // })
 
-const div =document.querySelector('div')
+const img = document.querySelector('img')
+img.addEventListener('load', () => {
+    console.log(img.width)
+    console.log(img.height)
+    console.log(img.naturalWidth)
+    console.log(img.naturalHeight)    
+})
+console.log(img.getBoundingClientRect().width)
+
+const div = document.querySelector('div')
 console.log(div.dataset)
 console.log(div.dataset.user)
 div.dataset.hello = "bonjour"
