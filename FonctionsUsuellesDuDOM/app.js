@@ -23,6 +23,14 @@ const listener = () => {
 }
 button.addEventListener('click', listener)
 
+button.animate([
+    {transform: 'translateY(0)'},
+    {transform: 'translateY(100px)', rotate:'360deg'},    
+], {
+    duration: 1000,
+    iterations: 2,
+    fill: 'both'
+})
 
 /**
  * 
