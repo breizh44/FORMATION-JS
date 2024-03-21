@@ -25,6 +25,11 @@ function setCookie(name, value, days) {
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${date.toUTCString()};`
 }
 
+console.log('Info')
+console.warn('Warning')
+console.error('Error')
+debugger
+
 setCookie('hello', 'Bonjour les gens', 2)
 console.log(getCookie('hello'))
 console.log(getCookie('clé'))
