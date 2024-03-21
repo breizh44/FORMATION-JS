@@ -51,16 +51,18 @@ export class TodoList {
         this.#listElement.addEventListener('delete', ({detail: todo}) => {
             this.#todos = this.#todos.filter(t => t!== todo) //on filtre la liste des todos pour enlever celui qui vient d'être supprimé
             console.log(this.#todos)
+            this.#onUpdate()
         })
 
         this.#listElement.addEventListener('toggle', ({detail: todo}) => {
             todo.completed = !todo.completed
             console.log(this.#todos)
+            this.#onUpdate()
         })        
     }
 
     /**
-     * 
+     * Soumission du formulaire => ajout d'un Todo
      * @param {SubmitEvent} e 
      */
     #onSubmit(e) {
@@ -77,7 +79,13 @@ export class TodoList {
         }
         const item = new TodoListItem(todo)
         this.#listElement.prepend(item.element)
+        this.#todos.push(todo) //on ajoute la nouvelle tâche au tableau des taches
+        this.#onUpdate()
         form.reset()
+    }
+
+    #onUpdate() {
+        localStorage.setItem('todos', JSON.stringify(this.#todos)) //sauvegarde de nos todos en Json dans le localStorage
     }
 
     /**
