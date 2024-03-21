@@ -43,6 +43,20 @@ export class TodoList {
         element.querySelectorAll('.btn-group button').forEach(button => {
             button.addEventListener('click', e => this.#toggleFilter(e))
         })
+
+        //comme les evts declenchés par TodoListItem sont propagés (Bubbles=true), 
+        //on peut les écouter depuis le composant Todo
+        //on peut voir ici le 2eme paramètre de la methode addEventListener qui utilise 
+        //la destructuration pour n'utiliser que le detail contenu dans l'evt
+        this.#listElement.addEventListener('delete', ({detail: todo}) => {
+            this.#todos = this.#todos.filter(t => t!== todo) //on filtre la liste des todos pour enlever celui qui vient d'être supprimé
+            console.log(this.#todos)
+        })
+
+        this.#listElement.addEventListener('toggle', ({detail: todo}) => {
+            todo.completed = !todo.completed
+            console.log(this.#todos)
+        })        
     }
 
     /**
@@ -105,9 +119,11 @@ class TodoListItem {
 */
 
     #element
+    #todo
 
     /** @type {Todo} */
     constructor(todo) {
+        this.#todo = todo
         const idTodo = `todo-${todo.id}`
         //on récupère le li du template qui vient d'être cloné
         const li = cloneTemplate('todolist-item').firstElementChild
@@ -126,6 +142,13 @@ class TodoListItem {
 
         button.addEventListener('click', e => this.remove(e))
         checkbox.addEventListener('change', e => this.toggle(e.currentTarget))
+
+        //on s'abonne à l'evenement custom de suppression d'une tâche
+        this.#element.addEventListener('delete', e=> {
+            console.log(e)
+            //e.preventDefault()
+        })
+       
     }
 
     /**
@@ -145,6 +168,17 @@ class TodoListItem {
      */
     remove(e) {
         e.preventDefault()
+        const event = new CustomEvent('delete', {
+            detail: this.#todo,
+            bubbles: true, //bubbles=true => on propage l'évenement
+            cancelable: true //indique que l'evt peut être annulé grace à un preventDefault
+        })
+        //déclenche un evenement "Custom" pour prévenir de la suppression d'une tâche
+        //ce custom event prend en 2eme paramètre un objet d'options
+        this.#element.dispatchEvent(event)
+        if (event.defaultPrevented) { //si l'evenement a été annulé, on n'effectue pas la suppression
+            return 
+        }
         this.#element.remove()
     }
 
@@ -160,5 +194,10 @@ class TodoListItem {
         } else {
             this.#element.classList.remove('is-completed')
         }
+        const event = new CustomEvent('toggle', {
+            detail: this.#todo,
+            bubbles: true //bubbles=true => on propage l'évenement
+        })  
+        this.#element.dispatchEvent(event)      
     }
 }
