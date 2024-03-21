@@ -32,6 +32,17 @@ button.animate([
     fill: 'both'
 })
 
+// window.addEventListener('resize', () => {
+//     console.log(window.innerHeight)
+// })
+
+const mediaQuery = window.matchMedia('(min-height: 300px)')
+console.log('mediaQuery => ', mediaQuery.matches)
+
+mediaQuery.addEventListener('change', () => {
+    console.log(mediaQuery.matches)
+})
+
 /**
  * 
  * @param {HTMLElement} element 
