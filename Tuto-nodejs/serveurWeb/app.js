@@ -7,6 +7,8 @@ const dir = dirname(fileURLToPath(import.meta.url))
 const filename = join(dir, 'index.html')
 
 const server = createServer((req, res) => {
+    console.log(req.url)
+    console.log(req.headers.accept)
     const file = createReadStream(filename)
     //file.pipe(res) //par défaut la réponse est fermée quand plus de données sur le pipe
     res.writeHead(200, {
