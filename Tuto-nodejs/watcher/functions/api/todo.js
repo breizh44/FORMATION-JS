@@ -1,5 +1,5 @@
 import { json } from "node:stream/consumers"
-import { createTodo, findTodos, removeTodo, updateTodo } from "../functions/todos_storage.js"
+import { createTodo, findTodos, removeTodo, updateTodo } from "../todos_storage.js"
 
 export async function index(req, res) {
     return findTodos()  
