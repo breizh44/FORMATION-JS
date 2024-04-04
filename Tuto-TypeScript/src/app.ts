@@ -111,3 +111,21 @@ function shapeGenerator(shapeType: InstantiableShape, x: number, y: number) {
 
 //shapeGenerator(Geometry2, 10, 20) //ne compile pas car Geometry2 ne possède pas de dméthode surface
 shapeGenerator(Triangle, 10, 20)
+
+interface Point2D {
+    x: number;
+    y: number;
+}
+
+
+class TwoDimensionPoint implements Point2D {
+    x = 0;
+    y = 0;
+
+}
+
+function draw(p: Point2D) {
+
+}
+
+draw(new TwoDimensionPoint())

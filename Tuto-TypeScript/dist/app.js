@@ -99,3 +99,12 @@ function shapeGenerator(shapeType, x, y) {
 }
 //shapeGenerator(Geometry2, 10, 20) //ne compile pas car Geometry2 ne possède pas de dméthode surface
 shapeGenerator(Triangle, 10, 20);
+class TwoDimensionPoint {
+    constructor() {
+        this.x = 0;
+        this.y = 0;
+    }
+}
+function draw(p) {
+}
+draw(new TwoDimensionPoint());
