@@ -2,11 +2,13 @@ declare class Poisson {
 }
 declare class Chat {
 }
-declare function generator<T extends {
+type AnimalOptions = {
     nager: any;
 } | {
     sauter: any;
-}>(options: T): T extends {
+};
+type AnimalFromOption<T> = T extends {
     nager: any;
 } ? Poisson : Chat;
+declare function generator<T extends AnimalOptions>(options: T): AnimalFromOption<T>;
 declare const a: Poisson;
