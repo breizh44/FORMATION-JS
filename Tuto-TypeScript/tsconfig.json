@@ -4,9 +4,14 @@
         "target": "ES2015",
         "noEmitOnError": true,
         "strict": true,
-        "noUncheckedIndexedAccess": true
+        "noUncheckedIndexedAccess": true,
+        "declaration": true,
+        "moduleResolution": "node"
     },
     "files": [
         "src/app.ts"
+    ],
+    "include": [
+        "src/types/**/*"
     ]
 }
