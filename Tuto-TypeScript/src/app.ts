@@ -1,19 +1,20 @@
-export class Point {
-    x = 0 
-    y = 0
+class Poisson {
 
-    move(x: number, y: number) {
-        this.x += x
-        this.y += y
-        return this //on retourne this pour pourvoir enchainer les méthodes
+}
+
+class Chat {
+
+}
+
+
+//Fonction avec une condition sur le type de retour
+function generator<T extends {nager: any} | {sauter: any}>(options: T): T extends {nager: any} ? Poisson : Chat {
+    if ("nager" in options) {
+        return new Poisson()
+    } else {
+        return new Chat()
     }
 }
 
-import scrollTo from 'scroll-to'
 
-//var scrollTo = require('scroll-to');
- 
-scrollTo(500, 1200, {
-  ease: 'out-bounce',
-  duration: 1500
-});
+const a = generator({nager: 'aze'})
