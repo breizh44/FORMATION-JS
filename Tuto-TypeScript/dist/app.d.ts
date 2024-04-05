@@ -1,11 +1,10 @@
-declare class Poisson {
-    cri(): boolean;
+declare class FeatureFlags {
+    env: string;
+    darkMode(): boolean;
+    privateMode(): boolean;
+    nsfwMode(): boolean;
 }
-declare class Chat {
-    cri(): string;
-}
-type AnimalCri<T> = T extends {
-    cri: () => infer U;
-} ? U : never;
-type A = AnimalCri<Chat>;
-type B = AnimalCri<Poisson>;
+type optionsFlag<T> = {
+    +readonly [key in keyof T as `get${string & key}`]: T[key] extends () => boolean ? boolean : never;
+};
+type A = optionsFlag<FeatureFlags>;
